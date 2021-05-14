@@ -7,4 +7,27 @@
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <div class="form-group">
+        <label>Message</label>
+        <input type="text" class="form-control" id="messageInput"/>
+        <button class="btn btn-primary btn-sm mt-2" id="button">Send</button>
+    </div>
 </div>
+
+<script>
+    var connection = new signalR.HubConnectionBuilder().withUrl('/messages').build();
+
+    connection.on('ReceiveMessage', function (id, message, timestamp) {
+        console.log('Message received', id, message, timestamp);
+    });
+
+    connection.start();
+
+    var button = document.getElementById('button');
+    var input = document.getElementById('messageInput');
+
+    button.addEventListener('click', function () {
+        connection.invoke('SendMessageAsync', input.value);
+    })
+</script>
