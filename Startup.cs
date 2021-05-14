@@ -1,3 +1,4 @@
+using AspNetCore.SignalR.Demo.SignalR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -22,6 +23,8 @@ namespace AspNetCore.SignalR.Demo
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //  SignalR service registration
+            services.AddSignalR();
             services.AddRazorPages();
         }
 
@@ -45,6 +48,8 @@ namespace AspNetCore.SignalR.Demo
 
             app.UseEndpoints(endpoints =>
             {
+                //  SignalR middleware registration
+                endpoints.MapHub<MessageHub>("/messages");
                 endpoints.MapRazorPages();
             });
         }
