@@ -1,3 +1,4 @@
+using AspNetCore.SignalR.Demo.Services;
 using AspNetCore.SignalR.Demo.SignalR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -26,6 +27,7 @@ namespace AspNetCore.SignalR.Demo
             //  SignalR service registration
             services.AddSignalR();
             services.AddRazorPages();
+            services.AddSingleton<IMessageService, MessageService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
