@@ -10,13 +10,17 @@
 
     <div class="form-group">
         <label>Message</label>
-        <input type="text" class="form-control" id="messageInput"/>
+        <input type="text" class="form-control" id="messageInput" />
         <button class="btn btn-primary btn-sm mt-2" id="button">Send</button>
     </div>
 </div>
 
 <script>
-    var connection = new signalR.HubConnectionBuilder().withUrl('/messages').build();
+    var connection
+        = new signalR.HubConnectionBuilder()
+            .withUrl('/messages')
+            .build()
+            .withAutomaticReconnect([0, 2000, 10000, 30000]);   //  this is default
 
     connection.on('ReceiveMessage', function (id, message, timestamp) {
         console.log('Message received', id, message, timestamp);
